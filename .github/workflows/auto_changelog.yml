@@ -6,6 +6,7 @@ on:
       - closed
     branches:
       - master
+      - main # MOTHBLOCKS TODO: remove
 permissions:
   contents: read
   contents: write
