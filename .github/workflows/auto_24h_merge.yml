@@ -1,14 +1,15 @@
 # Automatically merges PRs with a given label after 24 hours has passed, if they pass CI
+# MBTODO: Remove label when committed
 name: 24h Merge
 on:
   schedule:
   - cron: "11 * * * *"
   workflow_dispatch:
-  pull_request:
+  pull_request: # MBTODO: Remove
     branches:
     - main
 jobs:
-  24h_merge:
+  auto_24h_merge:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
