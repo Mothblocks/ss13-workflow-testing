@@ -1,0 +1,21 @@
+# Automatically merges PRs with a given label after 24 hours has passed, if they pass CI
+name: 24h Merge
+on:
+  schedule:
+  - cron: "11 * * * *"
+  workflow_dispatch:
+  pull_request:
+    branches:
+    - 
+jobs:
+  24h_merge:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run 24h merge bot
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { process24HourMerge } = await import('${{ github.workspace }}/tools/24h_merge/main.js')
+          await process24HourMerge({ github, context })
