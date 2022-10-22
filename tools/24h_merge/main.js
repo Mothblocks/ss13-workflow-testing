@@ -5,16 +5,16 @@ const DELAY = 5000;
 export async function process24HourMerge({ github, context }) {
   const result = await github.graphql(
     `query($owner:String!, $repo:String!, $label:String!) { 
-      repository(owner: $owner, name: $repo) {
-        pullRequests(labels: [$label], first: 100, states: OPEN) {
-          nodes {
-            id
-            title
-            createdAt
-          }
-        }
-      }
-  }`,
+			repository(owner: $owner, name: $repo) {
+				pullRequests(labels: [$label], first: 100, states: OPEN) {
+					nodes {
+						id
+						title
+						createdAt
+					}
+				}
+			}
+	}`,
     {
       owner: context.repo.owner,
       repo: context.repo.repo,
@@ -42,17 +42,21 @@ export async function process24HourMerge({ github, context }) {
     }
 
     console.log(`Merging ${pullRequest.title}`);
-    await github.graphql(
-      `mutation($id: ID!) {
-        enablePullRequestAutoMerge(input: {pullRequestId: $id}) {
-          pullRequest {
-            id
-          }
+    await github
+      .graphql(
+        `mutation($id: ID!) {
+					mergePullRequest(input: {pullRequestId: $id}, mergeMethod: SQUASH) {
+						pullRequest {
+							id
+						}
+					}
+				}`,
+        {
+          id: pullRequest.id,
         }
-      }`,
-      {
-        id: pullRequest.id,
-      }
-    );
+      )
+      .catch((error) => {
+        console.error("Error merging pull request", error);
+      });
   }
 }
