@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-    - 24h-merge
+    - main
 jobs:
   24h_merge:
     runs-on: ubuntu-latest
