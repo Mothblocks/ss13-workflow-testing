@@ -19,7 +19,9 @@ export async function removeGuideComments({ github, context }) {
   let newBody = context.payload.pull_request.body;
 
   for (const comment of comments) {
-    newBody = newBody.replace(new RegExp(`^\\s*${escapeRegex(comment)}\\s*`));
+    newBody = newBody.replace(
+      new RegExp(`\\s*${escapeRegex(comment)}\\s*`, "")
+    );
   }
 
   if (newBody !== context.payload.pull_request.body) {
