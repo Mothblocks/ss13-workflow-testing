@@ -1,0 +1,36 @@
+# Checks that a pull request has the commits in required_commits.txt.
+# This uses the required_commits.txt from master, so that you cannot mess it up with an old branch.
+name: Check required commits
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+jobs:
+  check_required_commits:
+    name: Check required commits
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: check_required_commits-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v3
+        repository: ${{ github.event.repository.name }}
+        branch: required-commits #MBTODO: remove
+      - name: Read required commits
+        id: required_commits
+        run: |
+          REQUIRED_COMMITS=$(jq -nrRc '[inputs | capture("^(?<commit>[a-f0-9]+) = (?<name>.+)$") | .commit, .name] | @tsv' .github/required_commits.txt)
+          echo "required_commits=$REQUIRED_COMMITS" >> $GITHUB_ENV
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          clean: true
+          # We want as much depth as possible, but fetch-depth: 0 also checks out all branches.
+          fetch-depth: 9999999999999999
+      - name: Check for required commits
+        run: ./tools/check_required_commits.sh
+        shell: bash
