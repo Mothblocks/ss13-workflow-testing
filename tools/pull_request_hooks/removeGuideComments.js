@@ -18,6 +18,8 @@ function escapeRegex(string) {
 export async function removeGuideComments({ github, context }) {
   let newBody = context.payload.pull_request.body;
 
+  if (!newBody) return;
+
   for (const comment of comments) {
     newBody = newBody.replace(
       new RegExp(`^\\s*${escapeRegex(comment)}\\s*`, "gm"),
