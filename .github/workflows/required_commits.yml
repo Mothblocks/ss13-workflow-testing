@@ -21,7 +21,7 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v3
         repository: ${{ github.event.repository.name }}
-        branch: required-commits #MBTODO: remove
+        ref: required-commits #MBTODO: remove
       - name: Read required commits
         id: required_commits
         run: |
