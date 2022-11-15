@@ -23,6 +23,7 @@ jobs:
         id: required_commits
         run: |
           REQUIRED_COMMITS=$(jq -nrRc '[inputs | capture("^(?<commit>[a-f0-9]+) = (?<name>.+)$") | .commit, .name] | @tsv' ./base/.github/required_commits.txt)
+          echo $REQUIRED_COMMITS
           echo "required_commits=$REQUIRED_COMMITS" >> $GITHUB_ENV
       - name: Checkout branch
         uses: actions/checkout@v3
