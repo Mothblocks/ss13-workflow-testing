@@ -17,7 +17,7 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.base_ref }}
+          ref: ${{ github.event.pull_request.base.repo.full_name }}
           path: base
       - name: Read required commits
         id: required_commits
