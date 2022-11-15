@@ -31,6 +31,8 @@ jobs:
           fetch-depth: 9999999999999999
           path: pr
       - name: Check for required commits
-        run: ./tools/check_required_commits.sh
+        run: |
+          chmod +x ./tools/check_required_commits.sh
+          ./tools/check_required_commits.sh
         shell: bash
         working-directory: pr
