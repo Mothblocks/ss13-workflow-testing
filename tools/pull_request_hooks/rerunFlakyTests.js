@@ -46,12 +46,13 @@ export async function reportFlakyTests({ github, context }) {
   );
 
   for (const job of failedJobsFromLastRun) {
-    const logs = await github.rest.actions.downloadJobLogsForWorkflowRun({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      job_id: job.id,
-    });
+    const { data: log } =
+      await github.rest.actions.downloadJobLogsForWorkflowRun({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        job_id: job.id,
+      });
 
-    console.log(JSON.stringify(logs, null, 2));
+    console.log(btoa(unescape(encodeURIComponent(log))));
   }
 }
