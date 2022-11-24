@@ -6,6 +6,7 @@ on:
     - completed
 jobs:
   workflow_run_test:
+    runs-on: ubuntu-latest
     steps:
     - run: echo $JSON
     env:
