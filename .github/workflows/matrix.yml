@@ -10,4 +10,4 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - run: "! grep fail ${{ matrix.phrase }}"
+    - run: "! grep ${{ matrix.phrase }} scratch.txt"
