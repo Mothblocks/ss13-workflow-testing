@@ -1,1 +1,3 @@
-export async function rerunFlakyTests({ github, context }) {}
+export async function rerunFlakyTests({ github, context }) {
+  console.log("hellooo");
+}
