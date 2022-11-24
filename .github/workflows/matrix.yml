@@ -20,3 +20,4 @@ jobs:
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(github) }}
+      - run: "exit 1"
