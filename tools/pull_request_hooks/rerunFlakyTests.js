@@ -1,5 +1,7 @@
 async function getFailedJobsForRun(github, context, workflowRunId, runAttempt) {
-  const { jobs } = await github.rest.actions.listJobsForWorkflowRunAttempt({
+  const {
+    data: { jobs },
+  } = await github.rest.actions.listJobsForWorkflowRunAttempt({
     owner: context.repo.owner,
     repo: context.repo.repo,
     run_id: workflowRunId,
