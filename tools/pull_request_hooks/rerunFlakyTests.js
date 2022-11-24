@@ -38,5 +38,20 @@ export async function rerunFlakyTests({ github, context }) {
 }
 
 export async function reportFlakyTests({ github, context }) {
-  console.log("oooo");
+  const failedJobsFromLastRun = await getFailedJobsForRun(
+    github,
+    context,
+    context.payload.workflow_run.id,
+    context.payload.workflow_run.run_attempt - 1
+  );
+
+  for (const job of failedJobsFromLastRun) {
+    const logs = await github.rest.actions.downloadJobLogsForWorkflowRun({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      job_id: job.id,
+    });
+
+    console.log(JSON.stringify(logs, null, 2));
+  }
 }
