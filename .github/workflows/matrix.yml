@@ -14,10 +14,8 @@ jobs:
   choose_to_fail_matrix:
     strategy:
       matrix:
-        attempt: [2]
+        attempt: ["2"]
     runs-on: ubuntu-latest
     steps:
-      - run: echo $JSON
-        env:
-          JSON: ${{ toJSON(github) }}
-      - run: "exit 1"
+      - run: exit 1
+        if: ${{ github.run_attempt != matrix.attempt }}
