@@ -1,0 +1,12 @@
+name: Workflow Run Test
+on:
+  workflow_run:
+    workflows: [Matrix Test]
+    types:
+    - completed
+jobs:
+  workflow_run_test:
+    steps:
+    - run: echo $JSON
+    env:
+      JSON: ${{ toJSON(github) }}
