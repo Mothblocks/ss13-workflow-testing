@@ -36,3 +36,7 @@ export async function rerunFlakyTests({ github, context }) {
     run_id: context.payload.workflow_run.id,
   });
 }
+
+export async function reportFlakyTests({ github, context }) {
+  console.log("oooo");
+}
