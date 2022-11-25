@@ -200,12 +200,12 @@ async function getExistingIssueId(graphql, context, title) {
   return undefined;
 }
 
-function createBody({ title, group, failures }, runUrl) {
+function createBody({ title, failures }, runUrl) {
   return `
 	<!-- This issue can be renamed, but do not change the next comment! -->
 	<!-- title: ${title} -->
 
-	${group} was automatically detected as a flaky test in [this test run](${runUrl}). Restarting tests cleared the failure.
+	Flaky tests were detected in [this test run](${runUrl}). This means that there was a failure that was cleared when the tests were simply restarted.
 	
 	Failures:
 	\`\`\`
@@ -216,7 +216,7 @@ function createBody({ title, group, failures }, runUrl) {
     )
     .join("\n")}
 	\`\`\`
-	`;
+	`.replace(/\s*/gm, "");
 }
 
 export async function reportFlakyTests({ github, context }) {
