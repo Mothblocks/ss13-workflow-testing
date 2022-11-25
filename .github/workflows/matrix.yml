@@ -47,3 +47,4 @@ jobs:
           echo "  Master (/datum/controller/master): Loop(2)"
           echo "  Master (/datum/controller/master): StartProcessing(0) at _forensics.dm:232"
           echo "::endgroup::"
+          exit 1
