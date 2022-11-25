@@ -216,7 +216,7 @@ function createBody({ title, failures }, runUrl) {
     )
     .join("\n")}
 	\`\`\`
-	`.replace(/\s*/gm, "");
+	`.replace(/^\s*/gm, "");
 }
 
 export async function reportFlakyTests({ github, context }) {
