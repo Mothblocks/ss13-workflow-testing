@@ -1,4 +1,4 @@
-name: Matrix Test
+name: CI Suite
 on:
   pull_request:
 jobs:
@@ -17,5 +17,33 @@ jobs:
         attempt: ["2"]
     runs-on: ubuntu-latest
     steps:
-      - run: echo "oh no" && exit 1
-        if: ${{ github.run_attempt != matrix.attempt }}
+      - if: ${{ github.run_attempt != matrix.attempt }}
+        run: |
+          echo "::group::/datum/unit_test/interesting"
+          echo "::error::Monkey Business caused 1 runtimes"
+          echo "	FAILURE #1: [15:31:23] Runtime in _forensics.dm,232: Cannot execute null.resolve()."
+          echo "  proc name: check blood (/datum/forensics/proc/check_blood)"
+          echo "  src: /datum/forensics (/datum/forensics)"
+          echo "  call stack:"
+          echo "  /datum/forensics (/datum/forensics): check blood()"
+          echo "  /datum/forensics (/datum/forensics): New(the blood splatter (/obj/effect/decal/cleanable/blood/hitsplatter), null, null, /list (/list), null)"
+          echo "  the blood splatter (/obj/effect/decal/cleanable/blood/hitsplatter): add blood DNA(/list (/list))"
+          echo "  Anthony Hayhurst (461) (/mob/living/carbon/human): spray blood(2, 1)"
+          echo "  Rough Abrasion (/datum/wound/slash/moderate): wound injury(null, 2)"
+          echo "  Rough Abrasion (/datum/wound/slash/moderate): apply wound(the monkey left leg (/obj/item/bodypart/l_leg/monkey), 0, null, 0, 2)"
+          echo "  the monkey left leg (/obj/item/bodypart/l_leg/monkey): check wounding(2, 8, 5, 15, 2)"
+          echo "  the monkey left leg (/obj/item/bodypart/l_leg/monkey): receive damage(8, 0, 0, 0, 1, null, 5, 15, 1, 2)"
+          echo "  Monkey (/datum/species/monkey): apply damage(8, "brute", "l_leg", 0, Anthony Hayhurst (461) (/mob/living/carbon/human), 0, 0, 5, 15, 1, 2)"
+          echo "  Monkey (/datum/species/monkey): spec attacked by(the glass shiv (/obj/item/knife/shiv), Abigail Schmidt (295) (/mob/living/carbon/human), the monkey left leg (/obj/item/bodypart/l_leg/monkey), Anthony Hayhurst (461) (/mob/living/carbon/human))"
+          echo "  ..."
+          echo "  Anthony Hayhurst (461) (/mob/living/carbon/human): attackby(the glass shiv (/obj/item/knife/shiv), Abigail Schmidt (295) (/mob/living/carbon/human), null)"
+          echo "  the glass shiv (/obj/item/knife/shiv): melee attack chain(Abigail Schmidt (295) (/mob/living/carbon/human), Anthony Hayhurst (461) (/mob/living/carbon/human), null)"
+          echo "  /datum/ai_behavior/monkey_atta... (/datum/ai_behavior/monkey_attack_mob): monkey attack(/datum/ai_controller/monkey/an... (/datum/ai_controller/monkey/angry), Anthony Hayhurst (461) (/mob/living/carbon/human), 0.8, 0)"
+          echo "  /datum/ai_behavior/monkey_atta... (/datum/ai_behavior/monkey_attack_mob): perform(0.8, /datum/ai_controller/monkey/an... (/datum/ai_controller/monkey/angry), "BB_monkey_current_attack_targe...")"
+          echo "  /datum/ai_controller/monkey/an... (/datum/ai_controller/monkey/angry): ProcessBehavior(0.8, /datum/ai_behavior/monkey_atta... (/datum/ai_behavior/monkey_attack_mob))"
+          echo "  /datum/ai_controller/monkey/an... (/datum/ai_controller/monkey/angry): process(0.1)"
+          echo "  AI Behavior Ticker (/datum/controller/subsystem/processing/ai_behaviors): fire(0)"
+          echo "  AI Behavior Ticker (/datum/controller/subsystem/processing/ai_behaviors): ignite(0)"
+          echo "  Master (/datum/controller/master): Loop(2)"
+          echo "  Master (/datum/controller/master): StartProcessing(0) at _forensics.dm:232"
+          echo "::endgroup::"
