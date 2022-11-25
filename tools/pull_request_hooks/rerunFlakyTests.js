@@ -171,6 +171,7 @@ async function getExistingIssueId(graphql, context, title) {
             states: [OPEN]
           ) {
             nodes {
+              number
               title
               body
             }
@@ -254,6 +255,7 @@ export async function reportFlakyTests({ github, context }) {
 
     if (existingIssueId !== undefined) {
       // Maybe in the future, if it's helpful, update the existing issue with new links
+      console.log(`Existing issue found: #${existingIssueId}`);
       return;
     }
 
