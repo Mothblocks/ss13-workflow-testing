@@ -257,7 +257,7 @@ export async function reportFlakyTests({ github, context }) {
       return;
     }
 
-    await github.rest.issues.createIssue({
+    await github.rest.issues.create({
       owner: context.repo.owner,
       repo: context.repo.repo,
       title: details.title,
