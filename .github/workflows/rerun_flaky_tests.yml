@@ -1,4 +1,4 @@
-name: Rerun Flaky Tests
+name: Rerun/Report Flaky Tests
 on:
   workflow_run:
     workflows: [Matrix Test]
