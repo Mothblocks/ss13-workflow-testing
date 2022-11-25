@@ -180,7 +180,7 @@ async function getExistingIssueId(graphql, context, title) {
     `,
     {
       owner: context.repo.owner,
-      name: context.repo.repo,
+      repo: context.repo.repo,
       label: LABEL,
     }
   );
